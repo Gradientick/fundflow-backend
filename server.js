@@ -2,9 +2,10 @@ import express from "express";
 import config from "./utils/config.js";
 import mongoose from "mongoose";
 import cors from "cors";
-
-import userRouter from "./Routes/userCreateRouter.js";
-
+import userRouter from "./Routes/userRouter.js";
+import transactionRouter from "./Routes/transactionRouter.js";
+import loginRouter from "./Routes/loginRouter.js";
+import verifyToken from "./utils/vertifyToken.js";
 async function connectToDB(url) {
   try {
     await mongoose.connect(url);
@@ -26,7 +27,9 @@ app.get("/", (_req, res) => {
 });
 
 // Routes
-app.use("/api/users", userRouter);
+app.use("/api/users", verifyToken, userRouter);
+app.use("/api/transactions", verifyToken, transactionRouter);
+app.use("/api/login", loginRouter);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

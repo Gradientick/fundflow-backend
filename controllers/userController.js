@@ -67,4 +67,5 @@ export default {
   createUser,
   getUsers,
   deleteUser,
+  updateUser,
 };
